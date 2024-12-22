@@ -9,6 +9,7 @@
 
 /**
  * Creates an array of integers from the specified start to end (inclusive).
+ * Создает массив целых чисел от указанного начала до конца (включительно).
  *
  * @param {number} start - The first number of an array.
  * @param {number} end - The last number of an array.
