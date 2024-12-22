@@ -21,13 +21,18 @@
  *    getIntervalArray(0, 100) => [ 0, 1, 2, ..., 100 ]
  *    getIntervalArray(3, 3) => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  return Array.from(
+    Array(end - start + 1).fill(start),
+    (item, index) => item + index
+  );
 }
 
 /**
  * Returns a new array where each element is the sum of the corresponding elements
  * from two arrays. Arrays can have different lengths.
+ * Возвращает новый массив, где каждый элемент является суммой соответствующих элементов
+ * из двух массивов. Массивы могут иметь разную длину.
  *
  * @param {array} arr1 - The first array.
  * @param {array} arr2 - The second array.
