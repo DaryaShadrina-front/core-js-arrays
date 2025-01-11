@@ -334,6 +334,9 @@ function selectMany(arr, childrenSelector) {
  * Every month, you record your income and expenses.
  * Expenses may be greater than income.
  * You need to calculate the final balance.
+ * Каждый месяц вы записываете свои доходы и расходы.
+ * Расходы могут превышать доходы.
+ * Вам необходимо рассчитать итоговый баланс.
  *
  * @param {array} arr - The input array [[income, expence], ...]
  * @return {number} - The final balance.
@@ -343,12 +346,13 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([ [ 10, 8 ], [ 1, 5 ] ])  => (10 - 8) + (1 - 5) = 2 + -4 = -2
  *   calculateBalance([]) => 0
  */
-function calculateBalance(/* arr */) {
-  throw new Error('Not implemented');
+function calculateBalance(arr) {
+  return arr.reduce((total, [inc, exp]) => total + inc - exp, 0);
 }
 
 /**
  * Breaks an array into chunks of the specified size.
+ * Разбивает массив на фрагменты заданного размера.
  *
  * @param {array} arr - The array to be broken into chunks.
  * @param {number} chunkSize - The size of each chunk.
@@ -359,12 +363,15 @@ function calculateBalance(/* arr */) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  return Array(Math.ceil(arr.length / chunkSize))
+    .fill(0)
+    .map((el, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
 }
 
 /**
  * Generates an array of odd numbers of the specified length.
+ * Генерирует массив нечетных чисел заданной длины.
  *
  * @param {number} len - The length of an array.
  * @return {array} - An array of odd numbers.
@@ -375,12 +382,13 @@ function createChunks(/* arr, chunkSize */) {
  *    generateOdds(2) => [ 1, 3 ]
  *    generateOdds(5) => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  return new Array(len).fill(1).map((el, i) => 2 * i + 1);
 }
 
 /**
  * Returns an element from the multidimensional array by the specified indices.
+ * Возвращает элемент из многомерного массива по указанным индексам.
  *
  * @param {array} arr - The input multidimensional array
  * @param {array} indices - The array of indices
@@ -391,12 +399,15 @@ function generateOdds(/* len */) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  return indices.length === 1
+    ? arr[indices[0]]
+    : getElementByIndices(arr[indices[0]], indices.slice(1));
 }
 
 /**
  * Returns the number of all falsy values in the specified array.
+ * Возвращает количество всех ложных значений в указанном массиве.
  *
  * @param {array} arr - The input array.
  * @return {number} - The number of all falsy values.
@@ -407,12 +418,13 @@ function getElementByIndices(/* arr, indices */) {
  *  getFalsyValuesCount([ -1, 'false', null, 0 ]) => 2
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.filter((el) => !el).length;
 }
 
 /**
  * Creates an identity matrix of the specified size.
+ * Создает идентификационную матрицу заданного размера.
  *
  * @param {number} n - A size of the matrix.
  * @return {array} - An identity matrix.
@@ -429,12 +441,19 @@ function getFalsyValuesCount(/* arr */) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return Array(n)
+    .fill(0)
+    .map((m, i) =>
+      Array(n)
+        .fill(0)
+        .map((emp, j) => (i === j ? 1 : 0))
+    );
 }
 
 /**
  * Returns an array containing indices of odd elements in the input array.
+ * Возвращает массив, содержащий индексы нечетных элементов во входном массиве.
  *
  * @param {array} numbers - The array of numbers.
  * @return {array} - An array containing indices of odd elements.
@@ -444,8 +463,13 @@ function getIdentityMatrix(/* n */) {
  *    getIndicesOfOddNumbers([2, 4, 6, 8, 10]) => []
  *    getIndicesOfOddNumbers([11, 22, 33, 44, 55]) => [0, 2, 4]
  */
-function getIndicesOfOddNumbers(/* numbers */) {
-  throw new Error('Not implemented');
+function getIndicesOfOddNumbers(numbers) {
+  return numbers.reduce((i, j, k) => {
+    if (j % 2 !== 0) {
+      i.push(k);
+    }
+    return i;
+  }, []);
 }
 
 /**
