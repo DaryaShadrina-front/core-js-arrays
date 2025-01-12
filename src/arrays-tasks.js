@@ -474,6 +474,7 @@ function getIndicesOfOddNumbers(numbers) {
 
 /**
  * Returns the array of RGB Hex strings from the specified array of numbers.
+ * Возвращает массив шестнадцатеричных строк RGB из указанного массива чисел.
  *
  * @param {array} arr - The input array.
  * @return {array} - The array of RGB Hex strings.
@@ -482,12 +483,16 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map((value) => {
+    const getHex = value.toString(16).padStart(6, '0');
+    return `#${getHex.slice(-6).toUpperCase()}`;
+  });
 }
 
 /**
  * Returns the n largest values from the specified array
+ * Возвращает n наибольших значений из указанного массива
  *
  * @param {array} arr - The input array
  * @param {number} n - Number of maximum values.
@@ -500,12 +505,13 @@ function getHexRGBValues(/* arr */) {
  *   getMaxItems([ 10, 2, 7, 5, 3, -5 ], 3) => [ 10, 7, 5 ]
  *   getMaxItems([ 10, 10, 10, 10 ], 3) => [ 10, 10, 10 ]
  */
-function getMaxItems(/* arr, n */) {
-  throw new Error('Not implemented');
+function getMaxItems(arr, n) {
+  return arr.sort((a, b) => b - a).slice(0, n);
 }
 
 /**
  * Finds and returns an array containing only the common elements found in two arrays.
+ * Находит и возвращает массив, содержащий только общие элементы, найденные в двух массивах.
  *
  * @param {array} arr1 - The first array.
  * @param {array} arr2 - The second array.
@@ -516,12 +522,13 @@ function getMaxItems(/* arr, n */) {
  *    findCommonElements(['a', 'b', 'c'], ['b', 'c', 'd']) => [ 'b', 'c' ]
  *    findCommonElements([1, 2, 3], ['a', 'b', 'c']) => []
  */
-function findCommonElements(/* arr1, arr2 */) {
-  throw new Error('Not implemented');
+function findCommonElements(arr1, arr2) {
+  return arr1.filter((el) => arr2.includes(el));
 }
 
 /**
  * Finds the length of the longest increasing and uninterrupted subsequence of a given array of integers.
+ * Находит длину самой длинной возрастающей и непрерывной подпоследовательности из заданного массива целых чисел.
  *
  * @param {array} nums - The array of integers.
  * @return {number} - The length of the longest increasing subsequence.
@@ -531,13 +538,21 @@ function findCommonElements(/* arr1, arr2 */) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => longest is [3, 10] and [1, 20] => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => longest is [7, 40, 80] => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  return (
+    nums
+      .map((el, i) => (i === 0 || el < nums[i - 1] ? 'n' : 1))
+      .join('')
+      .split('n')
+      .sort((a, b) => b.length - a.length)[0].length + 1
+  );
 }
 
 /**
  * Propagates every item in sequence its position times
  * Returns an array that consists of: one first item, two second items, three third items etc.
+ * Последовательно перемещает каждый элемент в соответствии с его местоположением во времени
+ * Возвращает массив, состоящий из: одного первого элемента, двух вторых элементов, трех третьих элементов и т.д.
  *
  * @param {array} arr - The input array
  * @return {array}
@@ -549,13 +564,17 @@ function findLongestIncreasingSubsequence(/* nums */) {
  *  propagateItemsByPositionIndex([ 'a', 'b', 'c', null ]) => [ 'a', 'b', 'b', 'c', 'c', 'c',  null, null, null, null ]
  *  propagateItemsByPositionIndex([ 1,2,3,4,5 ]) => [ 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr.length === 1
+    ? arr
+    : arr.map((el, i) => Array(i + 1).fill(el)).flat();
 }
 
 /**
  * Shifts an array by n positions. If n is negative, the array is shifted to the left;
  * if positive, it is shifted to the right.
+ * Сдвигает массив на n позиций. Если значение n отрицательное, массив сдвигается влево;
+ * если положительное, он сдвигается вправо.
  *
  * @param {array} arr - The array to be shifted.
  * @param {number} n - The number of positions to shift the array elements.
@@ -566,12 +585,15 @@ function propagateItemsByPositionIndex(/* arr */) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  return n > 0
+    ? [...arr.slice(n + 1), ...arr.slice(0, n + 1)]
+    : [...arr.slice(Math.abs(n)), ...arr.slice(0, Math.abs(n))];
 }
 
 /**
  * Sorts digit names.
+ * Сортирует названия цифр.
  *
  * @param {array} arr - The input array.
  * @return {array} - Sorted array.
@@ -583,14 +605,30 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digit = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  return arr.sort((a, b) => digit.indexOf(a) - digit.indexOf(b));
 }
 
 /**
  * Swaps the head and tail of the specified array:
  * the head (first half) of array move to the end, the tail (last half) move to the start.
  * The middle element (if exists) leave on the same position. *
+ * Меняет местами начало и хвост указанного массива:
+ * начало (первая половина) массива перемещается в конец, конец (последняя половина) - в начало.
+ * Средний элемент (если он существует) остается на том же месте. *
  *
  * @param {array} arr - The input array.
  * @return {array} - The swapped array.
@@ -606,8 +644,11 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const middle = Math.floor(arr.length / 2);
+  const head = arr.slice(0, middle);
+  const tail = arr.slice(-middle);
+  return !middle ? arr : [...tail, ...arr.slice(middle, -middle), ...head];
 }
 
 module.exports = {
